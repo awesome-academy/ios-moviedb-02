@@ -12,14 +12,16 @@ extension Reactive where Base: UIViewController {
     
     var isAnimating: Binder<Bool> {
         return Binder(base) { vc, isVisible in
-            let view = vc.navigationController?.view ?? vc.view
+            guard let view = vc.navigationController?.view ?? vc.view else {
+                return
+            }
             if isVisible {
-                view?.alpha = 0.5
-                view?.isUserInteractionEnabled = false
+                view.alpha = 0.5
+                view.isUserInteractionEnabled = false
                 SVProgressHUD.show()
             } else {
-                view?.alpha = 1
-                view?.isUserInteractionEnabled = true
+                view.alpha = 1
+                view.isUserInteractionEnabled = true
                 SVProgressHUD.dismiss()
             }
         }

@@ -17,6 +17,11 @@ final class API: APIBase {
     }
     
     override func preprocess(_ input: APIInputBase) -> Observable<APIInputBase> {
-        return super.preprocess(input)
+        var params = input.parameters ?? [:]
+        params["api_key"] = Keys.apiKey
+        return super.preprocess(APIInputBase(urlString: input.urlString,
+                                             parameters: params,
+                                             requestType: input.requestType,
+                                             requireAccessToken: input.requireAccessToken))
     }
 }

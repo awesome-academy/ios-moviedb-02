@@ -13,7 +13,7 @@ class APIInput: APIInputBase {
     override init(urlString: String,
                   parameters: [String: Any]?,
                   requestType: HTTPMethod,
-                  requireAccessToken: Bool) {
+                  requireAccessToken: Bool) {        
         super.init(urlString: urlString,
                    parameters: parameters,
                    requestType: requestType,
