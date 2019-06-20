@@ -8,7 +8,6 @@
 
 extension Array where Element == Int {
     func convertListGenres() -> String {
-        guard !isEmpty else { return "" }
         return self.compactMap { Constants.genres[$0] }
             .joined(separator: ", ")
     }

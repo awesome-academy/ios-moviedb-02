@@ -10,6 +10,7 @@ protocol Assembler: class,
     RepositoriesAssembler,
     MainAssembler,
     PopularListAssembler,
+    UpcomingListAssembler,
     AppAssembler {
     
 }

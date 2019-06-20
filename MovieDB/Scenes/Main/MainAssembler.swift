@@ -33,8 +33,14 @@ extension MainAssembler where Self: DefaultAssembler {
                                          image: UIImage(named: "popular"),
                                          tag: 0)
         }
+        let upcomingVC: UpcomingListViewController =
+            resolve(navigationController: navController).then {
+                $0.tabBarItem = UITabBarItem(title: "Upcoming",
+                                             image: UIImage(named: "upcoming"),
+                                             tag: 1)
+            }
         vc.bindViewModel(to: vm)
-        vc.viewControllers = [popularVC]
+        vc.viewControllers = [popularVC, upcomingVC]
         return vc
     }
     
