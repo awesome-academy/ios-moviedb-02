@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="yZC-Hc-Nwh">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Main View Controller-->
+        <scene sceneID="2Tu-xP-Vb4">
+            <objects>
+                <tabBarController storyboardIdentifier="MainViewController" id="yZC-Hc-Nwh" customClass="MainViewController" customModule="MovieDB" customModuleProvider="target" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="uQi-cv-lLQ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OlP-cj-gfe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1210" y="-294"/>
+        </scene>
+        <!--Popular List View Controller-->
+        <scene sceneID="Uxp-zT-q40">
+            <objects>
+                <viewController storyboardIdentifier="PopularListViewController" id="mDV-dI-Na4" customClass="PopularListViewController" customModule="MovieDB" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8SC-cr-iFx">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="AR8-Kc-34F" customClass="RefreshTableView" customModule="MGLoadMore">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="jPS-eD-mY7" firstAttribute="top" secondItem="AR8-Kc-34F" secondAttribute="top" constant="20" id="3UT-6w-Wq7"/>
+                            <constraint firstItem="jPS-eD-mY7" firstAttribute="trailing" secondItem="AR8-Kc-34F" secondAttribute="trailing" id="b8l-xE-Sx5"/>
+                            <constraint firstItem="jPS-eD-mY7" firstAttribute="bottom" secondItem="AR8-Kc-34F" secondAttribute="bottom" id="fd6-dG-s0v"/>
+                            <constraint firstItem="AR8-Kc-34F" firstAttribute="leading" secondItem="jPS-eD-mY7" secondAttribute="leading" id="nW8-cZ-mtE"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="jPS-eD-mY7"/>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="AR8-Kc-34F" id="BxE-S0-gug"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4ct-vA-tzh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-463" y="-295"/>
+        </scene>
+    </scenes>
+</document>

@@ -11,7 +11,7 @@ target 'MovieDB' do
   pod 'RxDataSources', '~> 3.0'
   
   # Clean Architecture
-  pod 'MGArchitecture', '0.3.0'
+  pod 'MGArchitecture', '0.3.2'
   pod 'MGAPIService', '0.3.0'
   pod 'MGLoadMore', '0.1.0'
   
