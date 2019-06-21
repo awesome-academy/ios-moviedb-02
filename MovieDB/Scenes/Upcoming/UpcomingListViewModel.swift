@@ -20,6 +20,7 @@ extension UpcomingListViewModel: ViewModelType {
         var loadTrigger: Driver<Void>
         var refreshTrigger: Driver<Void>
         var loadMoreTrigger: Driver<Void>
+        var selection: Driver<IndexPath>
     }
     
     struct Output {
@@ -30,6 +31,7 @@ extension UpcomingListViewModel: ViewModelType {
         var loadingMore: Driver<Bool>
         var fetchItems: Driver<Void>
         var isEmptyData: Driver<Bool>
+        var selectedItem: Driver<Movie>
     }
     
     func transform(_ input: Input) -> Output {
@@ -49,6 +51,16 @@ extension UpcomingListViewModel: ViewModelType {
         }
         .asDriverOnErrorJustComplete()
         
+        let movies = page
+            .map { $0.items }
+            .asDriverOnErrorJustComplete()
+        
+        let selectedItem = input.selection
+            .withLatestFrom(movies) { $1[$0.row] }
+            .do(onNext: { movie in
+                self.navigation.toDetailVC(movie: movie)
+            })
+        
         let isEmptyData = checkIfDataIsEmpty(fetchItemsTrigger: fetchItems,
                                              loadTrigger: Driver.merge(loading, refreshing),
                                              items: movieList)
@@ -58,6 +70,7 @@ extension UpcomingListViewModel: ViewModelType {
                       error: error,
                       loadingMore: loadingMore,
                       fetchItems: fetchItems,
-                      isEmptyData: isEmptyData)
+                      isEmptyData: isEmptyData,
+                      selectedItem: selectedItem)
     }
 }

@@ -25,6 +25,7 @@ final class UpcomingListViewModelTests: XCTestCase {
     private let loadTrigger = PublishSubject<Void>()
     private let refreshTrigger = PublishSubject<Void>()
     private let loadMoreTrigger = PublishSubject<Void>()
+    private let selection = PublishSubject<IndexPath>()
     
     override func setUp() {
         super.setUp()
@@ -37,7 +38,9 @@ final class UpcomingListViewModelTests: XCTestCase {
                                             refreshTrigger: refreshTrigger
                                                             .asDriverOnErrorJustComplete(),
                                             loadMoreTrigger: loadMoreTrigger
-                                                             .asDriverOnErrorJustComplete())
+                                                .asDriverOnErrorJustComplete(),
+                                            selection: selection
+                                                .asDriverOnErrorJustComplete())
         output = viewModel.transform(input)
         
         output.error
@@ -59,6 +62,9 @@ final class UpcomingListViewModelTests: XCTestCase {
             .drive()
             .disposed(by: disposeBag)
         output.refreshing
+            .drive()
+            .disposed(by: disposeBag)
+        output.selectedItem
             .drive()
             .disposed(by: disposeBag)
     }
@@ -99,6 +105,16 @@ final class UpcomingListViewModelTests: XCTestCase {
         let movies = try! output.movieList.toBlocking().first()
         
         XCTAssertEqual(movies?.first?.items.count, 2)
+        waitForExpectations(timeout: 1, handler: nil)
+    }
+    
+    func test_selectedMovieItem_ShowDetailMovie() {
+        let expectation = self.expectation(description: "expected toDetailVC() to be called")
+        navigator.expectationToDetailCalled = expectation
+        
+        loadTrigger.onNext(())
+        selection.onNext(IndexPath(row: 0,
+                                   section: 0))
         waitForExpectations(timeout: 1, handler: nil)
     }
 }

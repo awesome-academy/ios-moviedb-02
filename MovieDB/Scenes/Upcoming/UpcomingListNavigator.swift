@@ -7,10 +7,16 @@
 //
 
 protocol UpcomingListNavigatorType {
-    
+    func toDetailVC(movie: Movie)
 }
 
 struct UpcomingListNavigator: UpcomingListNavigatorType {
     var assembler: Assembler
     var navigation: UINavigationController
+    
+    func toDetailVC(movie: Movie) {
+        let detailVC: DetailViewController = assembler.resolve(navigation: navigation,
+                                                               movie: movie)
+        navigation.pushViewController(detailVC, animated: true)
+    }
 }

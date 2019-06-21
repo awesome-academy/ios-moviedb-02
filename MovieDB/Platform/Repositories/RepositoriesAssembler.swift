@@ -10,10 +10,15 @@ import UIKit
 
 protocol RepositoriesAssembler {
     func resolve() -> MovieRepositoryType
+    func resolve() -> DetailRepositoryType
 }
 
 extension RepositoriesAssembler where Self: DefaultAssembler {
     func resolve() -> MovieRepositoryType {
         return MovieRepository()
+    }
+    
+    func resolve() -> DetailRepositoryType {
+        return DetailRepository()
     }
 }

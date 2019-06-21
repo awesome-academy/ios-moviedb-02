@@ -35,6 +35,7 @@ target 'MovieDB' do
   pod 'Validator', '3.0.2'
   pod 'Cosmos', '16.0.0'
   pod 'YoutubeKit'
+  pod 'MBProgressHUD'
   
   target 'MovieDBTests' do
     inherit! :search_paths

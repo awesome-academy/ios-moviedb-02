@@ -9,10 +9,14 @@
 import RxDataSources
 
 struct UpcomingViewModel {
-    var movie: Movie
+    let movie: Movie
 }
 
 extension UpcomingViewModel: MovieModelType {
+    var id: Int {
+        return movie.id
+    }
+    
     var title: String {
         return movie.title
     }

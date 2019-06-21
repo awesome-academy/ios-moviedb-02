@@ -15,4 +15,5 @@ protocol MovieModelType {
     var voteAverage: Double { get }
     var posterPath: String { get }
     var releaseDate: String { get }
+    var id: Int { get }
 }

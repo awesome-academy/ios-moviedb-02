@@ -57,6 +57,9 @@ extension PopularListViewModel: ViewModelType {
         
         let selectedItem = input.selection
             .withLatestFrom(movies) { $1[$0.row] }
+            .do(onNext: {
+                self.navigator.toDetailVC(movie: $0)
+            })
         
         let isEmptyData = checkIfDataIsEmpty(fetchItemsTrigger: fetchItems,
                                              loadTrigger: Driver.merge(loading, refreshing),

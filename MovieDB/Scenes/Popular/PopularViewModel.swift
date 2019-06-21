@@ -11,6 +11,10 @@ struct PopularViewModel {
 }
 
 extension PopularViewModel: MovieModelType {
+    var id: Int {
+        return movie.id
+    }
+    
     var title: String {
         return movie.title
     }

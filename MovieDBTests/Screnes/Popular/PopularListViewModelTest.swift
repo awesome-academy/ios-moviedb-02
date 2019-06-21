@@ -86,4 +86,16 @@ final class PopularListViewModelTest: XCTestCase {
         XCTAssertEqual(movies?.first?.items.count, 2)
         waitForExpectations(timeout: 1, handler: nil)
     }
+    
+    func test_selectedMovieItem_showDetailMovie() {
+        let expectation = self.expectation(description: "expected toDetailVC() to be called")
+        navigator.expectationToDetailCalled = expectation
+        
+        //act
+        loadTrigger.onNext(())
+        selection.onNext(IndexPath(row: 0,
+                                   section: 0))
+        // Test
+        waitForExpectations(timeout: 1, handler: nil)
+    }
 }

@@ -47,3 +47,5 @@ extension Movie: Mappable {
         backdropPath <- map["backdrop_path"]
     }
 }
+
+extension Movie: Then { }

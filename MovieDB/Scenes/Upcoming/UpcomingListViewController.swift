@@ -52,7 +52,8 @@ final class UpcomingListViewController: UIViewController, BindableType {
         
         let input = UpcomingListViewModel.Input(loadTrigger: Driver.just(()),
                                                 refreshTrigger: tableView.loadMoreTopTrigger,
-                                                loadMoreTrigger: tableView.loadMoreBottomTrigger)
+                                                loadMoreTrigger: tableView.loadMoreBottomTrigger,
+                                                selection: tableView.rx.itemSelected.asDriver())
         
         let output = viewModel.transform(input)
         
@@ -76,6 +77,9 @@ final class UpcomingListViewController: UIViewController, BindableType {
             .disposed(by: rx.disposeBag)
         output.isEmptyData
             .drive(tableView.isEmptyData)
+            .disposed(by: rx.disposeBag)
+        output.selectedItem
+            .drive()
             .disposed(by: rx.disposeBag)
     }
 }
