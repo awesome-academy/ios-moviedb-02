@@ -19,7 +19,6 @@ struct SearchNavigator: SearchNavigatorType {
     func toDetailScreen(movie: Movie) {
         let detailVC: DetailViewController = assembler.resolve(navigation: navigator,
                                                                movie: movie)
-        navigator.pushViewController(detailVC,
-                                     animated: true)
+        navigator.pushViewController(detailVC, animated: true)
     }
 }

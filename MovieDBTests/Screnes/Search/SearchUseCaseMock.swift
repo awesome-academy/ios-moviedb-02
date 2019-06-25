@@ -21,18 +21,12 @@ final class SearchUseCaseMock: SearchUseCaseType {
     var getMovieListCalled: XCTestExpectation?
     var loadMoreMovieListCalled: XCTestExpectation?
     
-    func getGenresID(indexList: [IndexPath]) -> [Int] {
-        return indexList.map {
-            Array(Constants.genres.keys)[$0.row]
-        }
-    }
-    
-    func searchMovie(keyword: String, genres: [Int]) -> Observable<PagingInfo<Movie>> {
+    func searchMovie(param: (String, [IndexPath])) -> Observable<PagingInfo<Movie>> {
         getMovieListCalled?.fulfill()
-        return loadMoreMovie(keyword: keyword, genres: genres, page: 1)
+        return loadMoreMovie(param: param, page: 1)
     }
     
-    func loadMoreMovie(keyword: String, genres: [Int], page: Int) -> Observable<PagingInfo<Movie>> {
+    func loadMoreMovie(param: (String, [IndexPath]), page: Int) -> Observable<PagingInfo<Movie>> {
         loadMoreMovieListCalled?.fulfill()
         return movieListReturn
     }

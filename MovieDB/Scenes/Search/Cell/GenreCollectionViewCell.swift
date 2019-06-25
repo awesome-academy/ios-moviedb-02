@@ -14,12 +14,12 @@ final class GenreCollectionViewCell: UICollectionViewCell, NibReusable {
     
     override var isSelected: Bool {
         didSet {
-            backgroundColor = isSelected ? UIColor.red : UIColor.groupTableViewBackground
+            backgroundColor = isSelected ? .red : .groupTableViewBackground
         }
     }
     
     func bindViewModel( _ viewModel: GenreModel) {
-        backgroundColor = isSelected ? UIColor.red : UIColor.groupTableViewBackground
+        backgroundColor = isSelected ? .red : .groupTableViewBackground
         nameLabel.text = viewModel.name
     }
 }

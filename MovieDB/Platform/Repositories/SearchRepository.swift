@@ -14,20 +14,16 @@ struct SearchRepository: SearchRepositoryType {
     
     func searchMovie(keyword: String, genres: [Int], page: Int) -> Observable<PagingInfo<Movie>> {
         let input = API.GetMovieByKeywordInput(query: keyword, page: page)
-        return API.shared
-            .getMovieByKeyword(input: input)
+        return API.shared.getMovieByKeyword(input: input)
             .map { output in
-                guard let movies = output.movies else {
+                guard var movies = output.movies else {
                     throw APIInvalidResponseError()
                 }
-                return PagingInfo<Movie>(page: page,
-                                         items: movies
-                                            .filter { movie in
-                                                if genres.isEmpty {
-                                                    return true
-                                                }
-                                                return !Set(movie.genres).isDisjoint(with: genres)
-                                            })
+                movies = movies
+                    .filter {
+                        genres.isEmpty || !Set($0.genres).isDisjoint(with: genres)
+                    }
+                return PagingInfo<Movie>(page: page, items: movies)
             }
     }
 }

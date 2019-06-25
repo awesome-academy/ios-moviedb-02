@@ -15,7 +15,6 @@ struct GenreModel {
 
 extension GenreModel {
     init() {
-        self.init(name: "",
-                  id: 0)
+        self.init(name: "", id: 0)
     }
 }

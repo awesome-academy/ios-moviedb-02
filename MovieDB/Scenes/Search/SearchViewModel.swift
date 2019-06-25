@@ -36,56 +36,28 @@ extension SearchViewModel: ViewModelType {
         var selectedMovie: Driver<Movie>
         var isEmptyData: Driver<Bool>
         var genresList: Driver<[GenreModel]>
-        var gotoTop: Driver<Void>
     }
     
     func transform(_ input: Input) -> Output {
         
         let errorTracker = ErrorTracker()
-
-        let searchText = input.textSearch
-            .debounce(0.5)
-            .distinctUntilChanged()
         
-        let search = searchText
-            .withLatestFrom(input.selectionGenre) { ($0, $1) }
-            .asObservable()
+        let loadTrigger = Driver
+            .combineLatest(input.textSearch.debounce(0.5).distinctUntilChanged(),
+                           input.selectionGenre)
         
-        let getItems: () -> Observable<PagingInfo<Movie>> = {
-            return search
-                .take(1)
-                .flatMapLatest { arg -> Observable<PagingInfo<Movie>> in
-                    let (query, selectedItems) = arg
-                    let genres = self.usecase.getGenresID(indexList: selectedItems)
-                    return self.usecase
-                        .searchMovie(keyword: query, genres: genres)
-                        .trackError(errorTracker)
-                }
-        }
+        let refreshTrigger = input.refreshTrigger
+            .withLatestFrom(loadTrigger)
         
-        let loadMoreItems: (_ page: Int) -> Observable<PagingInfo<Movie>> = { page in
-            return search
-                .take(1)
-                .flatMapLatest { arg -> Observable<PagingInfo<Movie>> in
-                    let (query, selectedItems) = arg
-                    let genres = self.usecase.getGenresID(indexList: selectedItems)
-                    print(genres)
-                    return self.usecase
-                        .loadMoreMovie(keyword: query, genres: genres, page: page)
-                        .trackError(errorTracker)
-                }
-        }
+        let loadMoreTrigger = input.loadMoreTrigger
+            .withLatestFrom(loadTrigger)
         
-        let loadTrigger = Driver.merge(input.loadTrigger,
-                                       searchText.mapToVoid(),
-                                       input.selectionGenre.mapToVoid())
-        
-        let loadMore = setupLoadMorePaging(loadTrigger: loadTrigger,
-                                           getItems: getItems,
-                                           refreshTrigger: input.refreshTrigger,
-                                           refreshItems: getItems,
-                                           loadMoreTrigger: input.loadMoreTrigger,
-                                           loadMoreItems: loadMoreItems)
+        let loadMore = setupLoadMorePagingWithParam(loadTrigger: loadTrigger,
+                                                    getItems: usecase.searchMovie,
+                                                    refreshTrigger: refreshTrigger,
+                                                    refreshItems: usecase.searchMovie,
+                                                    loadMoreTrigger: loadMoreTrigger,
+                                                    loadMoreItems: usecase.loadMoreMovie)
         let ( page, fetchItems, error, loading, refreshing, loadingMore ) = loadMore
         
         let movieResult = page.map {
@@ -107,13 +79,11 @@ extension SearchViewModel: ViewModelType {
             })
         
         let isEmptyData = checkIfDataIsEmpty(fetchItemsTrigger: fetchItems,
-                                             loadTrigger: Driver.merge(loading,
-                                                                       refreshing),
+                                             loadTrigger: Driver.merge(loading, refreshing),
                                              items: movie)
         let genresList = input.loadTrigger
             .flatMapLatest {
-                self.usecase
-                    .getListGenres()
+                self.usecase.getListGenres()
                     .asDriverOnErrorJustComplete()
             }
         
@@ -125,7 +95,6 @@ extension SearchViewModel: ViewModelType {
                       movieResult: movieResult,
                       selectedMovie: selectedMovie,
                       isEmptyData: isEmptyData,
-                      genresList: genresList,
-                      gotoTop: loadTrigger)
+                      genresList: genresList)
     }
 }

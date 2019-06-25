@@ -32,10 +32,6 @@ final class SearchViewController: UIViewController, BindableType {
         tabBarController?.title = "Search"
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
-    
     // MARK: - Methods
     func bindViewModel() {
         searchResultsDataSource = SearchResultsDataSource(configureCell: { _, tb, indexPath, item in
@@ -68,7 +64,11 @@ final class SearchViewController: UIViewController, BindableType {
             .drive()
             .disposed(by: rx.disposeBag)
         output.loading
-            .drive()
+            .drive(onNext: { [unowned self] _ in
+                UIView.animate(withDuration: 0.5, animations: {
+                    self.resultTableView.contentOffset = .zero
+                })
+            })
             .disposed(by: rx.disposeBag)
         output.loadingMore
             .drive(resultTableView.loadingMoreBottom)
@@ -79,7 +79,6 @@ final class SearchViewController: UIViewController, BindableType {
         output.movieResult
             .drive(resultTableView.rx.items(dataSource: searchResultsDataSource))
             .disposed(by: rx.disposeBag)
-        
         output.genresList
             .drive(genresCollectionView.rx.items) { collectionView, row, element in
                 let indexPath = IndexPath(row: row, section: 0)
@@ -94,10 +93,6 @@ final class SearchViewController: UIViewController, BindableType {
             .disposed(by: rx.disposeBag)
         output.isEmptyData
             .drive(resultTableView.isEmptyData)
-            .disposed(by: rx.disposeBag)
-        output.gotoTop
-            .map { CGPoint(x: 0, y: 0) }
-            .drive(resultTableView.rx.contentOffset)
             .disposed(by: rx.disposeBag)
     }
     
