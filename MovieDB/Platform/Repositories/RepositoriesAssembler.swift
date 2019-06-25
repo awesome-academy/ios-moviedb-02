@@ -11,6 +11,7 @@ import UIKit
 protocol RepositoriesAssembler {
     func resolve() -> MovieRepositoryType
     func resolve() -> DetailRepositoryType
+    func resolve() -> SearchRepositoryType
 }
 
 extension RepositoriesAssembler where Self: DefaultAssembler {
@@ -20,5 +21,9 @@ extension RepositoriesAssembler where Self: DefaultAssembler {
     
     func resolve() -> DetailRepositoryType {
         return DetailRepository()
+    }
+    
+    func resolve() -> SearchRepositoryType {
+        return SearchRepository()
     }
 }

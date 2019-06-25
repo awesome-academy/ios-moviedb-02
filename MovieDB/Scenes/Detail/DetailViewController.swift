@@ -123,7 +123,7 @@ extension DetailViewController {
             vc.overViewLabel.text = movie.overview
             vc.releaseDateLabel.text = movie.releaseDate
             vc.title = movie.title
-            vc.starRateView.rating = movie.voteAverage
+            vc.starRateView.rating = movie.voteAverage / 2
         }
     }
 }

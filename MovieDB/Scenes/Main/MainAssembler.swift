@@ -39,8 +39,14 @@ extension MainAssembler where Self: DefaultAssembler {
                                              image: UIImage(named: "upcoming"),
                                              tag: 1)
             }
+        let searchVC: SearchViewController =
+            resolve(navigationController: navController).then {
+                $0.tabBarItem = UITabBarItem(title: "Search",
+                                             image: UIImage(named: "search"),
+                                             tag: 2)
+            }
         vc.bindViewModel(to: vm)
-        vc.viewControllers = [popularVC, upcomingVC]
+        vc.viewControllers = [popularVC, upcomingVC, searchVC]
         return vc
     }
     

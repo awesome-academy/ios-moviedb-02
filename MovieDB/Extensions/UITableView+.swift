@@ -18,7 +18,9 @@ extension UITableView {
                                    height: tableView.frame.size.height)
                 let emptyView = EmptyDataView(frame: frame)
                 tableView.backgroundView = emptyView
+                tableView.separatorStyle = .none
             } else {
+                tableView.separatorStyle = .singleLine
                 tableView.backgroundView = nil
             }
         }

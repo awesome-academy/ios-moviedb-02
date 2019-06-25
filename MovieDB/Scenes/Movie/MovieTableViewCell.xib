@@ -56,7 +56,7 @@
                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <view userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="suR-2m-K56" customClass="CosmosView" customModule="Cosmos">
+                    <view userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="suR-2m-K56" customClass="CosmosView" customModule="Cosmos">
                         <rect key="frame" x="268" y="51" width="120" height="20"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <userDefinedRuntimeAttributes>
@@ -84,6 +84,7 @@
                     <constraint firstItem="suR-2m-K56" firstAttribute="bottom" secondItem="lwH-ma-7NX" secondAttribute="bottom" id="bGn-De-nsZ"/>
                     <constraint firstAttribute="trailing" secondItem="tHY-QJ-Ll2" secondAttribute="trailing" constant="8" id="eTk-WQ-DuG"/>
                     <constraint firstItem="lwH-ma-7NX" firstAttribute="leading" secondItem="44o-r6-OLo" secondAttribute="leading" id="ha7-c7-7W2"/>
+                    <constraint firstItem="suR-2m-K56" firstAttribute="top" relation="greaterThanOrEqual" secondItem="tHY-QJ-Ll2" secondAttribute="bottom" id="kH4-cr-DOu"/>
                     <constraint firstAttribute="bottom" secondItem="wsf-jT-EYq" secondAttribute="bottom" constant="7.5" id="l4j-Cl-uYi"/>
                     <constraint firstItem="wsf-jT-EYq" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="l5x-zw-S5b"/>
                     <constraint firstAttribute="trailing" secondItem="0QK-Re-pH3" secondAttribute="trailing" constant="8" id="pTL-mG-UXJ"/>
