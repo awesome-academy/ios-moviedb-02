@@ -12,11 +12,14 @@ protocol DetailUseCaseType {
     func getTrailerLink(movieID: Int) -> Observable<String>
     func getActorList(movieID: Int) -> Observable<[Actor]>
     func getProductionCompanyList(movieID: Int) -> Observable<[Company]>
+    func getStatusMovie(movie: Movie) -> Bool
+    func toggleFavorite(movie: Movie) -> Observable<Bool>
 }
 
 struct DetailUseCase: DetailUseCaseType {
     
     var detailRepo: DetailRepositoryType
+    var favoriteRepo: FavoriteRepositoryType
     
     func getTrailerLink(movieID: Int) -> Observable<String> {
         return detailRepo.getTrailerLink(movieID: movieID)
@@ -28,5 +31,17 @@ struct DetailUseCase: DetailUseCaseType {
     
     func getProductionCompanyList(movieID: Int) -> Observable<[Company]> {
         return detailRepo.getProductionCompanyList(movieID: movieID)
+    }
+    
+    func getStatusMovie(movie: Movie) -> Bool {
+        return favoriteRepo.checkItemExist(movie)
+    }
+    
+    func toggleFavorite(movie: Movie) -> Observable<Bool> {
+        if favoriteRepo.checkItemExist(movie) {
+            return favoriteRepo.delete(movie)
+        }
+        return favoriteRepo.add(movie)
+            .map { _ in true }
     }
 }

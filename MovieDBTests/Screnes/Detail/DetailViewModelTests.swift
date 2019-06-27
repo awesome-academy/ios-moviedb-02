@@ -24,6 +24,7 @@ final class DetailViewModelTests: XCTestCase {
     private let disposeBage = DisposeBag()
     
     private let loadTrigger = PublishSubject<Void>()
+    private let toggleTrigger = PublishSubject<Void>()
     
     override func setUp() {
         super.setUp()
@@ -35,7 +36,8 @@ final class DetailViewModelTests: XCTestCase {
         viewModel = DetailViewModel(usecase: usecase,
                                     navigator: navigator,
                                     movie: movie)
-        input = DetailViewModel.Input(loadTrigger: loadTrigger.asDriverOnErrorJustComplete())
+        input = DetailViewModel.Input(loadTrigger: loadTrigger.asDriverOnErrorJustComplete(),
+                                      toggleFavoriteTrigger: toggleTrigger.asDriverOnErrorJustComplete())
         output = viewModel.transform(input)
         output.actorList
             .drive()
@@ -55,6 +57,9 @@ final class DetailViewModelTests: XCTestCase {
         output.loadingTrailer
             .drive()
             .disposed(by: rx.disposeBag)
+        output.toggleFavorite
+            .drive()
+            .disposed(by: disposeBage)
     }
     
     func test_getActorListCalled() {
@@ -130,5 +135,12 @@ final class DetailViewModelTests: XCTestCase {
         
         // assert
         XCTAssert(error is TestError)
+    }
+    
+    func test_favoriteButtonTap_ToggleFavoriteCalled() {
+    
+        toggleTrigger.onNext(())
+        
+        XCTAssert(usecase.toggleFavoriteCalled)
     }
 }

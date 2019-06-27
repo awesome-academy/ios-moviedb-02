@@ -141,5 +141,35 @@
             </objects>
             <point key="canvasLocation" x="1049" y="-296"/>
         </scene>
+        <!--Favorite List View Controller-->
+        <scene sceneID="RDs-jI-Ibt">
+            <objects>
+                <viewController storyboardIdentifier="FavoriteListViewController" id="Rk2-se-mwL" customClass="FavoriteListViewController" customModule="MovieDB" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="MlH-KI-4TF">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mPv-9d-aey">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Jei-54-K5f" firstAttribute="top" secondItem="mPv-9d-aey" secondAttribute="top" constant="20" id="40k-OP-jcl"/>
+                            <constraint firstItem="Jei-54-K5f" firstAttribute="bottom" secondItem="mPv-9d-aey" secondAttribute="bottom" id="SKj-qG-kz8"/>
+                            <constraint firstItem="Jei-54-K5f" firstAttribute="trailing" secondItem="mPv-9d-aey" secondAttribute="trailing" id="fT4-Ge-39r"/>
+                            <constraint firstItem="mPv-9d-aey" firstAttribute="leading" secondItem="Jei-54-K5f" secondAttribute="leading" id="pBq-DW-cRf"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Jei-54-K5f"/>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="mPv-9d-aey" id="6Gy-UM-PJn"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9qU-F0-vzM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1953" y="-295"/>
+        </scene>
     </scenes>
 </document>

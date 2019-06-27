@@ -1,16 +1,18 @@
 //
-//  PopularViewModel.swift
+//  FavoriteViewModel.swift
 //  MovieDB
 //
-//  Created by cuonghx on 6/18/19.
+//  Created by cuonghx on 6/24/19.
 //  Copyright © 2019 Sun*. All rights reserved.
 //
 
-struct PopularViewModel {
+import RxDataSources
+
+struct FavoriteViewModel {
     let movie: Movie
 }
 
-extension PopularViewModel: MovieModelType {
+extension FavoriteViewModel: MovieModelType {
     
     var id: Int {
         return movie.id
@@ -38,5 +40,16 @@ extension PopularViewModel: MovieModelType {
     
     var releaseDate: String? {
         return movie.releaseDate
+    }
+}
+
+extension FavoriteViewModel: IdentifiableType, Equatable {
+    
+    var identity: Int {
+        return id
+    }
+    
+    static func == (lhs: FavoriteViewModel, rhs: FavoriteViewModel) -> Bool {
+        return lhs.id == rhs.id
     }
 }

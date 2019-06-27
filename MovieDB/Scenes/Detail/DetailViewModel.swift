@@ -20,6 +20,7 @@ struct DetailViewModel {
 extension DetailViewModel: ViewModelType {
     struct Input {
         var loadTrigger: Driver<Void>
+        var toggleFavoriteTrigger: Driver<Void>
     }
     
     struct Output {
@@ -29,6 +30,7 @@ extension DetailViewModel: ViewModelType {
         var companyList: Driver<[CompanySection]>
         var error: Driver<Error>
         var loadingTrailer: Driver<Bool>
+        var toggleFavorite: Driver<Bool>
     }
     
     func transform(_ input: Input) -> Output {
@@ -71,12 +73,20 @@ extension DetailViewModel: ViewModelType {
                     }
                     .asDriverOnErrorJustComplete()
             }
+
+        let toggleFavorite = input.toggleFavoriteTrigger
+            .flatMapLatest { _ in
+                self.usecase.toggleFavorite(movie: self.movie)
+                    .asDriverOnErrorJustComplete()
+            }
+            .startWith(usecase.getStatusMovie(movie: movie))
         
         return Output(movie: Driver.just(movie),
                       trailerLink: trailerLink,
                       actorList: actorList,
                       companyList: companyList,
                       error: errorTracker.asDriver(),
-                      loadingTrailer: indicatorTrailerLink.asDriver())
+                      loadingTrailer: indicatorTrailerLink.asDriver(),
+                      toggleFavorite: toggleFavorite)
     }
 }

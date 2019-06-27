@@ -20,7 +20,9 @@ final class MovieTableViewCell: UITableViewCell, NibReusable {
     private var movie: Movie!
     
     func bindViewModel(_ movieModel: MovieModelType) {
-        posterImageView.kf.setImage(with: URL(string: API.Urls.posterUrl + movieModel.posterPath))
+        let posterPath = movieModel.posterPath ?? ""
+        posterImageView.kf.setImage(with: URL(string: API.Urls.posterUrl + posterPath),
+                                    placeholder: UIImage(named: "movie"))
         titleLabel.text = movieModel.title
         releaseDateLabel.text = movieModel.releaseDate
         overViewLabel.text = movieModel.overview

@@ -87,7 +87,8 @@ final class DetailViewController: UIViewController, BindableType {
                 return item
             })
         
-        let input = DetailViewModel.Input(loadTrigger: Driver.just(()))
+        let input = DetailViewModel.Input(loadTrigger: Driver.just(()),
+                                          toggleFavoriteTrigger: favoriteBarButton.rx.tap.asDriver())
         
         let output = viewModel.transform(input)
         
@@ -109,6 +110,9 @@ final class DetailViewController: UIViewController, BindableType {
         output.loadingTrailer
             .drive(ytBaseView.isLoading)
             .disposed(by: rx.disposeBag)
+        output.toggleFavorite
+            .drive(trackingFavoriteButton)
+            .disposed(by: rx.disposeBag)
     }
 }
 
@@ -124,6 +128,12 @@ extension DetailViewController {
             vc.releaseDateLabel.text = movie.releaseDate
             vc.title = movie.title
             vc.starRateView.rating = movie.voteAverage / 2
+        }
+    }
+    var trackingFavoriteButton: Binder<Bool> {
+        return Binder(self) { vc, favorite in
+            let imageName = favorite ? "favorite" : "unfavorite"
+            vc.favoriteBarButton.image = UIImage(named: imageName)
         }
     }
 }

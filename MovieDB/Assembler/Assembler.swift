@@ -13,6 +13,7 @@ protocol Assembler: class,
     UpcomingListAssembler,
     DetailAssembler,
     SearchAssembler,
+    FavoriteListAssembler,
     AppAssembler {
     
 }

@@ -45,8 +45,14 @@ extension MainAssembler where Self: DefaultAssembler {
                                              image: UIImage(named: "search"),
                                              tag: 2)
             }
+        let favoriteVC: FavoriteListViewController =
+            resolve(navigationController: navController).then {
+                $0.tabBarItem = UITabBarItem(title: "Favorite",
+                                             image: UIImage(named: "favoriteTabBar"),
+                                             tag: 3)
+            }
         vc.bindViewModel(to: vm)
-        vc.viewControllers = [popularVC, upcomingVC, searchVC]
+        vc.viewControllers = [popularVC, upcomingVC, searchVC, favoriteVC]
         return vc
     }
     

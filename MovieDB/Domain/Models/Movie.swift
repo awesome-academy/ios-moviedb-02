@@ -7,45 +7,48 @@
 //
 
 import ObjectMapper
+import RealmSwift
 
-struct Movie {
-    var id: Int
-    var title: String
-    var overview: String
-    var genres: [Int]
-    var releaseDate: String
-    var voteAverage: Double
-    var posterPath: String
-    var backdropPath: String
-}
-
-extension Movie {
-    init() {
-        self.init(id: 0,
-                  title: "",
-                  overview: "",
-                  genres: [],
-                  releaseDate: "",
-                  voteAverage: 0.0,
-                  posterPath: "",
-                  backdropPath: "")
+final class Movie: Object {
+    
+    @objc dynamic var id = 0
+    @objc dynamic var title: String?
+    @objc dynamic var overview: String?
+    @objc dynamic var genres: String?
+    @objc dynamic var releaseDate: String?
+    @objc dynamic var voteAverage = 0.0
+    @objc dynamic var posterPath: String?
+    @objc dynamic var addDate = Date()
+    
+    var genresList: [Int]? {
+        didSet {
+            genres = genresList?.convertListGenres()
+        }
     }
+    
+    override class func primaryKey() -> String? {
+        return "id"
+    }
+    
 }
 
 extension Movie: Mappable {
     
-    init?(map: Map) { self.init() }
+    convenience init?(map: Map) { self.init() }
     
-    mutating func mapping(map: Map) {
+    func mapping(map: Map) {
         id <- map["id"]
         title <- map["title"]
         overview <- map["overview"]
-        genres <- map["genre_ids"]
+        genresList <- map["genre_ids"]
         releaseDate <- map["release_date"]
         voteAverage <- map["vote_average"]
         posterPath <- map["poster_path"]
-        backdropPath <- map["backdrop_path"]
     }
 }
 
-extension Movie: Then { }
+extension Movie {
+    func clone() -> Movie {
+        return Movie(value: self)
+    }
+}
